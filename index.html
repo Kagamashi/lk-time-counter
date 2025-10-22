@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Counter Since August 27, 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .date-display {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .counter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .counter-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.5rem 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .counter-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .counter-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .total-time {
+            font-size: 1rem;
+            opacity: 0.85;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .counter-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .counter-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Time Since</h1>
+        <div class="date-display">August 27, 2025</div>
+        
+        <div class="counter-grid">
+            <div class="counter-item">
+                <span class="counter-value" id="days">0</span>
+                <span class="counter-label">Days</span>
+            </div>
+            <div class="counter-item">
+                <span class="counter-value" id="hours">0</span>
+                <span class="counter-label">Hours</span>
+            </div>
+            <div class="counter-item">
+                <span class="counter-value" id="minutes">0</span>
+                <span class="counter-label">Minutes</span>
+            </div>
+            <div class="counter-item">
+                <span class="counter-value" id="seconds">0</span>
+                <span class="counter-label">Seconds</span>
+            </div>
+        </div>
+
+        <div class="total-time">
+            <strong>Total:</strong> <span id="totalDays">0</span> days · <span id="totalHours">0</span> hours · <span id="totalMinutes">0</span> minutes
+        </div>
+    </div>
+
+    <script>
+        // Target date: August 27, 2025
+        const targetDate = new Date('2025-08-27T00:00:00');
+
+        function updateCounter() {
+            const now = new Date();
+            const difference = now - targetDate;
+
+            // Calculate time units
+            const seconds = Math.floor(difference / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+
+            // Calculate remaining time for each unit
+            const displaySeconds = seconds % 60;
+            const displayMinutes = minutes % 60;
+            const displayHours = hours % 24;
+
+            // Update the display
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = displayHours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = displayMinutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = displaySeconds.toString().padStart(2, '0');
+
+            // Update totals
+            document.getElementById('totalDays').textContent = days.toLocaleString();
+            document.getElementById('totalHours').textContent = hours.toLocaleString();
+            document.getElementById('totalMinutes').textContent = minutes.toLocaleString();
+        }
+
+        // Update immediately and then every second
+        updateCounter();
+        setInterval(updateCounter, 1000);
+    </script>
+</body>
+</html>
